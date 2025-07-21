@@ -2,7 +2,7 @@
 
 # 🧮 DSA - Data Structures and Algorithms
 
-This repository contains my implementations and practice problems related to Data Structures and Algorithms (DSA), written in Python/C++/Java (mention whichever language you use).
+This repository contains my implementations and practice problems related to Data Structures and Algorithms (DSA), written in Java.
 
 It serves as a collection of solved problems from platforms like LeetCode, Codeforces, GeeksforGeeks, and others. Perfect for interview preparation, competitive programming, and strengthening problem-solving skills.
 
