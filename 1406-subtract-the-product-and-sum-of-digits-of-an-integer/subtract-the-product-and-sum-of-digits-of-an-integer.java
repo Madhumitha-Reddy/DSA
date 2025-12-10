@@ -8,6 +8,5 @@ class Solution {
             n=n/10;
         }
         return p-s;
-
     }
 }
