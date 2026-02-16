@@ -14,20 +14,15 @@
  * }
  */
 class Solution {
-    int temp;
-    boolean flag = true;
-    void pre(TreeNode root){
-        if(root==null)return;
-        if(root.val != temp){
-            flag = false;
-            return;
-        } 
-        pre(root.left);
-        pre(root.right);
+    public boolean dfs(TreeNode root, int value){
+        if(root == null) return true;
+        if(root.val != value){
+            return false;
+        }
+        return dfs(root.left, value) && dfs(root.right, value);
+
     }
     public boolean isUnivalTree(TreeNode root) {
-        temp = root.val;
-        pre(root);
-        return flag;
+        return dfs(root, root.val); 
     }
 }
