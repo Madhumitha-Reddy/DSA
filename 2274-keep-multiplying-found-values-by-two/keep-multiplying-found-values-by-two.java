@@ -1,15 +1,18 @@
 class Solution {
     public int findFinalValue(int[] nums, int original) {
-        int i=0;
-        while(i<=nums.length-1){
-            if(original == nums[i]){
-                i=0;
-                original = 2 * original;
-            }else{
-                i++;
+        boolean found = true;
+
+        while(found){
+            found = false;
+
+            for(int i = 0; i < nums.length; i++){
+                if(nums[i] == original){
+                    original = original * 2;
+                    found = true;
+                    break;
+                }
             }
         }
-
 
         return original;
     }
