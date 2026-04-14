@@ -3,34 +3,38 @@ class Solution {
         Stack<Integer> st = new Stack<>();
         int num = 0;
         char sign = '+';
+
         for(int i=0; i<s.length(); i++){
-            char c = s.charAt(i);
-            if(Character.isDigit(c)){
-                num = num * 10 + (c - '0');
+            char ch = s.charAt(i);
+            if(Character.isDigit(ch)){
+                num = num * 10 + (ch - '0');
             }
 
-            if((!Character.isDigit(c) && c != ' ') || i == s.length() - 1){
-
+            if((!Character.isDigit(ch) && ch != ' ') || i == s.length() - 1){
                 if(sign == '+'){
                     st.push(num);
-                }else if(sign == '-'){
+                }
+                if(sign == '-'){
                     st.push(-num);
-                }else if(sign == '*'){
+                }
+                if(sign == '*'){
                     st.push(st.pop() * num);
-                }else if(sign == '/'){
+                }
+
+                if(sign == '/'){
                     st.push(st.pop() / num);
                 }
 
-                sign = c;
+                sign = ch;
                 num = 0;
             }
         }
 
-            int res = 0;
-            while(!st.isEmpty()){
-                res = res + st.pop();
-            } 
+        int result = 0;
+        for(int val : st){
+            result += val;
+        }
 
-        return res;
+        return result;
     }
 }
