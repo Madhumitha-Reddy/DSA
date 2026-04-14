@@ -1,46 +1,48 @@
 class Solution {
     public int orangesRotting(int[][] grid) {
-        int m = grid.length;
-        int n = grid[0].length;
+        int rows = grid.length;
+        int cols = grid[0].length;
 
         Queue<int[]> q = new LinkedList<>();
         int fresh = 0;
-        for(int i=0; i<m; i++){
-            for(int j=0; j<n; j++){
+        for(int i=0; i<rows; i++){
+            for(int j=0; j<cols; j++){
                 if(grid[i][j] == 2){
-                    q.add(new int[]{i, j, 0});
-                }
-                else if(grid[i][j] == 1){
+                    q.offer(new int[]{i, j});
+                }else if (grid[i][j] == 1){
                     fresh++;
                 }
             }
         }
 
-        int time = 0;
-        int[] drow = {-1, 0, 1, 0};
-        int[] dcol = {0, 1, 0, -1};
+        if(fresh == 0) return 0;
+
+        int minutes = 0;
+        int[][] directions = {{1,0}, {-1,0}, {0,1}, {0,-1}};
 
         while(!q.isEmpty()){
-            int[] p = q.poll();
+            int size = q.size();
+            boolean rotten = false;
 
-            int r = p[0];
-            int c = p[1];
-            int t = p[2];
+            for(int i=0; i<size; i++){
+                int[] curr = q.poll();
 
-            time = Math.max(time, t);
+                for(int[] dir : directions){
+                    int r = curr[0] + dir[0];
+                    int c = curr[1] + dir[1];
 
-            for(int i=0; i<4; i++){
-                int nrow = r + drow[i];
-                int ncol = c + dcol[i];
-
-                if (nrow >= 0 && ncol >= 0 && nrow < m && ncol < n && grid[nrow][ncol] == 1){
-                    grid[nrow][ncol] = 2;
-                    q.add(new int[]{nrow, ncol, t + 1});
-                    fresh--;
+                    if(r>=0 && c>=0 && r<rows && c<cols && grid[r][c] == 1){
+                        grid[r][c] = 2;
+                        q.offer(new int[]{r,c});
+                        fresh--;
+                        rotten = true;
+                    }
                 }
             }
+
+            if(rotten) minutes++;
         }
 
-        return fresh == 0 ? time : -1;
+        return fresh == 0 ? minutes : -1;
     }
 }
