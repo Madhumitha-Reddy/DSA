@@ -24,7 +24,7 @@ class Solution {
     int maxSum(TreeNode root, int[] maxi){
         if(root == null)return 0;
         int l = Math.max(0, maxSum(root.left, maxi));
-        int r = Math.max(0, maxSum(root.right, maxi));
+        int r = Math.max(0, maxSum(root.right, maxi));   
         maxi[0] = Math.max(maxi[0], root.val + l + r);
         return Math.max(l, r)+ root.val;
     }
