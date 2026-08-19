@@ -2,12 +2,11 @@ class Solution {
     public int findMaxLength(int[] nums) {
         HashMap<Integer, Integer> map = new HashMap<>();
         map.put(0, -1);
-
-        int prefixSum = 0;
         int maxLength = 0;
+        int prefixSum = 0;
         for(int i=0; i<nums.length; i++){
             if(nums[i] == 0){
-                prefixSum += -1;
+                prefixSum -= 1;
             }else{
                 prefixSum += 1;
             }
@@ -19,7 +18,6 @@ class Solution {
                 map.put(prefixSum, i);
             }
         }
-
         return maxLength;
     }
 }
