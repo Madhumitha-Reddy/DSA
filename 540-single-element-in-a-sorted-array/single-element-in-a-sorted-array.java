@@ -1,20 +1,19 @@
 class Solution {
     public int singleNonDuplicate(int[] nums) {
-        HashMap<Integer, Integer> map = new HashMap<>();
-        for(int i=0; i<nums.length; i++){
-            if(map.containsKey(nums[i])){
-                map.put(nums[i], map.get(nums[i]) + 1);
+        int low = 0;
+        int high = nums.length - 1;
+        while(low < high){
+            int mid = low + (high - low) / 2;
+            if(mid % 2 == 1){
+                mid--;
+            }
+
+            if(nums[mid] == nums[mid + 1]){
+                low = mid + 2;
             }else{
-                map.put(nums[i], 1);
+                high = mid;
             }
         }
-
-        for(int i=0; i<nums.length; i++){
-            if(map.get(nums[i]) == 1){
-                return nums[i];
-            }
-        }
-
-        return -1;
+        return nums[low];
     }
 }
