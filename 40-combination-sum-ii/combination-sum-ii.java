@@ -1,23 +1,30 @@
 class Solution {
     public List<List<Integer>> combinationSum2(int[] candidates, int target) {
-        List<List<Integer>> ans = new ArrayList<>();
         Arrays.sort(candidates);
-        findCombinations(0, candidates, target, ans, new ArrayList<>());
+        List<List<Integer>> ans = new ArrayList<>();
+        helper(0, 0, candidates, target, new ArrayList<>(), ans);
         return ans;
     }
 
-    void findCombinations(int ind, int[] arr,int target, List<List<Integer>> ans, List<Integer> ds){
-        if(target == 0){
-            ans.add(new ArrayList<>(ds));
+    void helper(int index, int sum, int[] candidates, int target, List<Integer> list, List<List<Integer>> ans){
+        if(sum == target){
+            ans.add(new ArrayList<>(list));
             return;
         }
 
-        for(int i = ind; i < arr.length; i++) {
-            if (i > ind && arr[i] == arr[i - 1]) continue;
-            if (arr[i] > target) break;
-            ds.add(arr[i]);
-            findCombinations(i + 1, arr, target - arr[i], ans, ds);
-            ds.remove(ds.size() - 1);
+        if(index == candidates.length || sum > target){
+            return;
         }
+
+        list.add(candidates[index]);
+        helper(index + 1, sum + candidates[index], candidates, target, list, ans);
+
+        while (index + 1 < candidates.length &&
+               candidates[index] == candidates[index + 1]) {
+            index++;
+        }
+
+        list.remove(list.size() - 1);
+        helper(index + 1, sum, candidates, target, list, ans);
     }
 }
