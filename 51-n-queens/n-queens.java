@@ -7,52 +7,39 @@ class Solution {
             Arrays.fill(board[i], '.');
         }
 
-        solveQueens(0, board, ans, n);
+        solve(0, board, ans, n);
         return ans;
     }
 
-    void solveQueens(int col, char[][] board, List<List<String>> ans, int n){
+    void solve(int col, char[][] board, List<List<String>> ans, int n){
         if(col == n){
-
-            List<String> temp = new ArrayList<>();
-            for (int i = 0; i < n; i++) {
-                temp.add(new String(board[i]));
+            List<String> list = new ArrayList<>();
+            for(int i=0; i<n; i++){
+                list.add(new String(board[i]));
             }
-            ans.add(temp);
+            ans.add(list);
             return;
         }
-        for(int row = 0; row<n; row++){
-            if(isSafe1(row, col, board, n)){
+
+        for(int row=0; row<n; row++){
+            if(isSafe(row, col, board, n)){
                 board[row][col] = 'Q';
-                solveQueens(col + 1, board, ans, n);
-                board[row][col] = '.'; 
+                solve(col + 1, board, ans, n);
+                board[row][col] = '.';
             }
         }
     }
 
-    boolean isSafe1(int row, int col, char[][] board, int n){
-        int duprow = row;
-        int dupcol = col;
-        while(row >= 0 && col >= 0){
-            if(board[row][col] == 'Q') return false;
-            row--;
-            col--;
+    boolean isSafe(int row, int col, char[][] board, int n){
+        for(int j=0; j<col; j++){
+            if(board[row][j] == 'Q') return false;
         }
 
-        col = dupcol;
-        row = duprow;
-
-        while(col >= 0){
-            if(board[row][col] == 'Q') return false;
-            col--;
+        for (int i = row, j = col; i >= 0 && j >= 0; i--, j--) {
+            if (board[i][j] == 'Q') return false;
         }
-        row = duprow;
-        col = dupcol;
-        
-        while(row < n && col >= 0){
-            if(board[row][col] == 'Q') return false;
-            row++;
-            col--;
+        for (int i = row, j = col; i < n && j >= 0; i++, j--) {
+            if (board[i][j] == 'Q') return false;
         }
         return true;
     }
