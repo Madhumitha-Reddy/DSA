@@ -2,26 +2,25 @@ class Solution {
     public int countSubstrings(String s) {
         int count = 0;
         for(int i=0; i<s.length(); i++){
-            for(int j=i; j<s.length(); j++){
-                String sub = s.substring(i, j + 1);
-                if(palindrome(sub, 0, sub.length() - 1)){
-                    count++;
-                }
-            }
+            count += palindrome(s, i, i);
+            count += palindrome(s, i, i+1);
         }
 
         return count;
     }
 
-    boolean palindrome(String s, int left, int right){
-        while(left < right){
+    int palindrome(String s, int left, int right){
+        int count = 0;
+        while(left >= 0 && right < s.length()){  
             if(s.charAt(left) != s.charAt(right)){
-                return false;
-            }
-            left++;
-            right--;
+                break;
+            }          
+            count++;
+
+            left--;
+            right++;
         }
 
-        return true;
+        return count;
     }
 }
