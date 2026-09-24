@@ -14,8 +14,7 @@ class Solution {
                         int y = j + col;
 
                         if (x >= 0 && x < n && y >= 0 && y < n) {
-                            if (img1[i][j] == 1 &&
-                                img2[x][y] == 1) {
+                            if (img1[i][j] == 1 && img2[x][y] == 1) {
                                 count++;
                             }
                         }
