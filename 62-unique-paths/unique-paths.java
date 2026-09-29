@@ -1,29 +1,30 @@
 class Solution {
     public int uniquePaths(int m, int n) {
-        int[][] dp= new int[m][n];
-
-        for(int[] row : dp){
-            Arrays.fill(row, -1);
+        int[][] dp = new int[m + 1][n + 1];
+        for(int[] num : dp){
+            Arrays.fill(num, -1);
         }
-        return helper(m - 1, n - 1, dp);
+        return helper(m - 1, n - 1, m, n, dp);
     }
+    int helper(int top, int left, int m, int n, int[][] dp){
 
-    int helper(int m, int n, int[][] dp){
-       
-        if(m == 0 && n == 0){
+        if(top == 0 || left == 0){
             return 1;
         }
-        if(m < 0 || n < 0){
-            return 0;
+
+        if(dp[top][left] != -1){
+            return dp[top][left];
         }
 
-        if(dp[m][n] != -1){
-            return dp[m][n];
+        int up = 0;
+        int leftPath = 0;
+        if(m >= 0){
+            up = helper(top - 1, left, m, n, dp);
+        }
+        if(n >= 0){
+            leftPath = helper(top, left - 1, m, n, dp);
         }
 
-        int up = helper(m - 1, n, dp);
-        int left = helper(m, n - 1, dp);
-
-        return dp[m][n] = up + left;
+        return dp[top][left] = up + leftPath;
     }
 }
