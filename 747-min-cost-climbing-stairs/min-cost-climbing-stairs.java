@@ -7,7 +7,6 @@ class Solution {
     }
 
     int helper(int index, int[] cost, int n, int[] dp){
-
         if(index == 0 || index == 1){
             return 0;
         }
@@ -16,10 +15,11 @@ class Solution {
             return dp[index];
         }
 
-        int min = Integer.MAX_VALUE;
-
         int oneStep = cost[index - 1] + helper(index - 1, cost, n, dp);
-        int twoStep = cost[index - 2] + helper(index - 2, cost, n, dp);
+        int twoStep = cost[index - 2];
+        if(index > 1){
+            twoStep = cost[index - 2] + helper(index - 2, cost, n, dp);
+        }
 
         return dp[index] = Math.min(oneStep, twoStep);
     }
