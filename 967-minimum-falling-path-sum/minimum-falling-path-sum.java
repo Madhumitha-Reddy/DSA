@@ -4,7 +4,7 @@ class Solution {
         int n = matrix[0].length;
         int min = Integer.MAX_VALUE;
 
-        int[][] dp = new int[m][n];
+        int[][] dp = new int[m + 1][n + 1];
         for(int[] num : dp){
             Arrays.fill(num, Integer.MAX_VALUE);
         }
