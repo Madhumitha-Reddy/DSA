@@ -1,34 +1,33 @@
 class Solution {
     public int lastStoneWeightII(int[] stones) {
         int n = stones.length;
-        int sum = 0;
-       
-        for(int i=0; i<n; i++){
-            sum += stones[i];
+        int totalSum = 0;
+        for(int num : stones){
+            totalSum += num;
         }
-        int[][] dp = new int[n][2 * sum + 1];
-        for(int i=0; i<n; i++){
-            Arrays.fill(dp[i], -1);
-        }
-        return helper(0, 0, stones, dp, sum);
 
+        int[][] dp = new int[n + 1][totalSum];
+        for(int[] num : dp){
+            Arrays.fill(num, -1);
+        }
+
+        return helper(n - 1, 0, stones, totalSum, dp);
     }
 
-    int helper(int index, int difference, int[] stones, int[][] dp, int sum){
-     
-        if(index == stones.length){
-            return Math.abs(difference);
+    int helper(int index, int sum, int[] stones, int totalSum, int[][] dp){
+        if(index < 0){
+            int sum2 = totalSum - sum;
+            int diff = Math.abs(sum2 - sum);
+            return diff;
         }
 
-        int shiftedDifference = sum + difference;
-        if(dp[index][shiftedDifference] != -1){
-            return dp[index][shiftedDifference];
+        if(dp[index][sum] != -1){
+            return dp[index][sum];
         }
+        int take = helper(index - 1, sum + stones[index], stones, totalSum, dp);
+        int notTake = helper(index - 1, sum, stones, totalSum, dp);
 
-      
-        int take = helper(index + 1, difference + stones[index], stones, dp, sum);
-        int notTake = helper(index + 1, difference - stones[index], stones, dp, sum);
+        return dp[index][sum] = Math.min(take, notTake);
 
-        return dp[index][shiftedDifference] = Math.min(take, notTake);
     }
 }
