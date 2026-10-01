@@ -1,32 +1,47 @@
 class Solution {
     public int coinChange(int[] coins, int amount) {
         int n = coins.length;
-        int[][] dp = new int[n + 1][amount + 1];
+        int[][] dp = new int[n][amount + 1];
         for(int[] num : dp){
             Arrays.fill(num, -1);
         }
-        int ans = helper(n - 1, coins, amount, 0, dp);
-        return ans == Integer.MAX_VALUE ? -1 : ans;
+        int ans = helper(n - 1, coins, amount, dp);
+        if(ans == Integer.MAX_VALUE){
+            return -1;
+        }
+        return ans;
     }
 
-    int helper(int index, int[] coins, int amount, int sum, int[][] dp){
-        if(sum == amount){
+    int helper(int index, int[] coins, int amount, int[][] dp){
+        if(amount == 0){
             return 0;
         }
-        if(sum > amount || index < 0){
+
+        if(index < 0){
             return Integer.MAX_VALUE;
         }
 
-        if(dp[index][sum] != -1){
-            return dp[index][sum];
+        if(coins.length == 1){
+            if(amount % coins[index] == 0){
+                return amount / coins[index];
+            }
+
+            return -1;
         }
 
-        int take = helper(index, coins, amount, sum + coins[index], dp);
-        if(take != Integer.MAX_VALUE){
-            take = take + 1;
+        if(dp[index][amount] != -1){
+            return dp[index][amount];
         }
-        int notTake = helper(index - 1, coins, amount, sum, dp);
+        int take = Integer.MAX_VALUE;
+        int notTake = Integer.MAX_VALUE;
+        if(coins[index] <= amount){
+            take = helper(index, coins, amount - coins[index], dp);
+            if(take != -1 && take != Integer.MAX_VALUE){
+                take++;
+            }
+        }
+        notTake = helper(index - 1, coins, amount, dp);
 
-        return dp[index][sum] = Math.min(take, notTake);
+        return dp[index][amount] = Math.min(take, notTake);
     }
 }
