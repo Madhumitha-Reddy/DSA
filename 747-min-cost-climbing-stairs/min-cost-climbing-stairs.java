@@ -15,7 +15,7 @@ class Solution {
             return dp[index];
         }
 
-        int oneStep = cost[index - 1] + helper(index - 1, cost, n, dp);
+        int oneStep = helper(index - 1, cost, n, dp) + cost[index - 1] ;
         int twoStep = cost[index - 2];
         if(index > 1){
             twoStep = cost[index - 2] + helper(index - 2, cost, n, dp);
