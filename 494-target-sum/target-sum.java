@@ -1,30 +1,25 @@
 class Solution {
     public int findTargetSumWays(int[] nums, int target) {
         int n = nums.length;
-        
-        int sum = 0;
-
-        for(int i=0; i<n; i++){
-            sum += nums[i];
-        }
-
-        return helper(0, 0, nums, target, 0);
-
+        return helper(n - 1, 0, nums, target);
     }
 
-    int helper(int index,int sum, int[] nums, int target, int count){
-       
-        if(index == nums.length){
+    int helper(int index, int sum, int[] nums, int target){
+        if(index < 0){
             if(sum == target){
                 return 1;
+            }else{
+                return 0;
             }
-            return 0;
         }
-        
-        int add =  helper(index + 1 ,sum + nums[index], nums, target, count);
 
-        int subtract = helper(index + 1, sum - nums[index], nums, target, count);
+        int take = 0;
+        int notTake = 0;
+        if(index >= 0){
+            take = helper(index - 1, sum + nums[index], nums, target);
+            notTake = helper(index - 1, sum - nums[index], nums, target);
+        }
 
-        return add + subtract;
+        return take + notTake;
     }
 }
