@@ -5,7 +5,7 @@ class Solution {
         if(n == 0){
             return 0;
         }
-        
+
         int[] arr = new int[n];
         int j = 0;
         int count = 0;
